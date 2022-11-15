@@ -37,7 +37,7 @@
 ###
 - Python GUI - tkinter
 
-### Setting up the project
+### ▷ Setting up the project
 
 After cloning the project:
 
@@ -47,7 +47,7 @@ Start the server:
 ```
 in terminal
 
-### Database
+### ▷ Database
 
 - MySql
   -https://dev.mysql.com/doc/
