@@ -4,7 +4,7 @@
 <h4 align="center">A social media app built with Kotlin (Android Studio) with multiple features</h4>
 <h4 align="center">👉 If you like this repo, give it a star ✨ and share 👨🏻‍💻 it to your friends 👈.</h4>
 
-### Screenshots:
+### ▷ Screenshots:
 <p align="center">
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/99815527/198546531-314301b8-7629-408b-8d8e-41ab11a16d45.png">
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/99815527/198546684-916c0c5a-f2e5-4a1e-959a-bc0cd9f993c1.png">
@@ -14,7 +14,7 @@
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/99815527/198547704-d7629dfe-cc0c-4ef4-be2c-bbb242e7f098.png">
 </p>
 
-### Features of Project:
+### ▷ Features of Project:
 
 - Real-time face detection
 - Loging Security System
@@ -29,7 +29,7 @@
 -   vii) Exit System
 
 
-### Algorithm use:
+### ▷ Algorithm use:
 
 - Haarcascade Opencv (Object Detection)
   -https://towardsdatascience.com/face-recognition-how-lbph-works-90ec258c3d6b
@@ -52,11 +52,11 @@ in terminal
 - MySql
   -https://dev.mysql.com/doc/
   
-### Desktop App
+### ▷ Desktop App
 - https://drive.google.com/file/d/1ExtmTQwScwp4jEqX7NXDi4VJR4GO0tXh/view?usp=sharing
 
 
 
-### Author: F.O.G_ntp(nguyenthanhphong)
+### ▷ Author: F.O.G_ntp(nguyenthanhphong)
 
 
