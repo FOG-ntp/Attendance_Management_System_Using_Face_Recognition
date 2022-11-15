@@ -2,7 +2,6 @@
 <h3 align="center"><span><img src="https://img.shields.io/badge/Python%20-%20Face%20Recognizer%20Attendance%20System-282C34?logo=Python&logoColor=3776AB" alt="HTML5 logo" title="HTML5" height="38" /></span>
 </h3>
 <h4 align="center">A social media app built with Kotlin (Android Studio) with multiple features</h4>
-<h4 align="center">👉 If you like this repo, give it a star ✨ and share 👨🏻‍💻 it to your friends 👈.</h4>
 
 ### ▷ Screenshots:
 <p align="center">
