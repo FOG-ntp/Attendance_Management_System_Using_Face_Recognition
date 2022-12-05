@@ -7,8 +7,9 @@ import mysql.connector
 class Register:
     def __init__(self,root):
         self.root=root
-        self.root.title("Đăng Ký")
-        self.root.geometry("1250x700+0+0")
+        self.root.title("Đăng Ký Tài Khoản")
+        self.root.state('zoomed')
+        self.root.configure(bg="#002B53")
 
         # ============ Variables =================
         self.var_fname=StringVar()
@@ -21,113 +22,113 @@ class Register:
         self.var_cpwd=StringVar()
         self.var_check=IntVar()
 
-        self.bg=ImageTk.PhotoImage(file=r"D:\VKU\STEM\Python-FYP-Face-Recognition-Attendence-System\Images_GUI\bgReg.jpg")
+        self.bg=ImageTk.PhotoImage(file=r"D:\VKU\DoAnCoSo4\Attendance_Management_System_Using_Face_Recognition\Images_GUI\bgReg.jpg")
         
         lb1_bg=Label(self.root,image=self.bg)
-        lb1_bg.place(x=0,y=0, relwidth=1,relheight=1)
+        lb1_bg.place(x=300,y=0, relwidth=1,relheight=1)
 
-        frame= Frame(self.root,bg="#F2F2F2")
-        frame.place(x=100,y=40,width=900,height=560)
+        frame= Frame(self.root,highlightbackground="lightgray",highlightthickness=2,bg="#F2F2F2")
+        frame.place(x=100,y=70,width=670,height=480)
         
 
-        # img1=Image.open(r"D:\VKU\STEM\Python-FYP-Face-Recognition-Attendence-System\Images_GUI\reg1.png")
+        # img1=Image.open(r"D:\VKU\DoAnCoSo4\Attendance_Management_System_Using_Face_Recognition\Images_GUI\reg1.png")
         # img1=img1.resize((450,100),Image.ANTIALIAS)
         # self.photoimage1=ImageTk.PhotoImage(img1)
         # lb1img1 = Label(image=self.photoimage1,bg="#F2F2F2")
-        # lb1img1.place(x=300,y=100, width=500,height=100)
+        # lb1img1.place(x=350,y=100, width=500,height=100)
         
 
-        get_str = Label(frame,text="Đăng Ký",font=("times new roman",30,"bold"),fg="#002B53",bg="#F2F2F2")
-        get_str.place(x=350,y=100)
+        get_str = Label(frame,text="Đăng Ký Tài Khoản Admin ",font=("times new roman",20,"bold"),fg="#F2F2F2",bg="#002B53")
+        get_str.place(x=0,y=0,width=665,height=50)
 
         #label1 
         fname =lb1= Label(frame,text="Họ:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
-        fname.place(x=100,y=200)
+        fname.place(x=50,y=90)
 
         #entry1 
         self.txtuser=ttk.Entry(frame,textvariable=self.var_fname,font=("times new roman",15,"bold"))
-        self.txtuser.place(x=103,y=225,width=270)
+        self.txtuser.place(x=50,y=120,width=270)
 
 
         #label2 
         lname =lb1= Label(frame,text="Tên:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
-        lname.place(x=100,y=270)
+        lname.place(x=50,y=160)
 
         #entry2 
         self.txtpwd=ttk.Entry(frame,textvariable=self.var_lname,font=("times new roman",15,"bold"))
-        self.txtpwd.place(x=103,y=295,width=270)
+        self.txtpwd.place(x=50,y=190,width=270)
 
         # ==================== section 2 -------- 2nd Columan===================
 
         #label1 
         cnum =lb1= Label(frame,text="Liên hệ:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
-        cnum.place(x=530,y=200)
+        cnum.place(x=350,y=90)
 
         #entry1 
         self.txtuser=ttk.Entry(frame,textvariable=self.var_cnum,font=("times new roman",15,"bold"))
-        self.txtuser.place(x=533,y=225,width=270)
+        self.txtuser.place(x=350,y=120,width=270)
 
 
         #label2 
         email =lb1= Label(frame,text="Email:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
-        email.place(x=530,y=270)
+        email.place(x=350,y=160)
 
         #entry2 
         self.txtpwd=ttk.Entry(frame,textvariable=self.var_email,font=("times new roman",15,"bold"))
-        self.txtpwd.place(x=533,y=295,width=270)
+        self.txtpwd.place(x=350,y=190,width=270)
 
         # ========================= Section 3 --- 1 Columan=================
 
         #label1 
         ssq =lb1= Label(frame,text="Câu hỏi bảo mật:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
-        ssq.place(x=100,y=350)
+        ssq.place(x=50,y=230)
 
         #Combo Box1
         self.combo_security = ttk.Combobox(frame,textvariable=self.var_ssq,font=("times new roman",15,"bold"),state="readonly")
         self.combo_security["values"]=("Select","Ngày tháng sinh","Nick Name","Sách yêu thích")
         self.combo_security.current(0)
-        self.combo_security.place(x=103,y=375,width=270)
+        self.combo_security.place(x=50,y=260,width=270)
 
 
         #label2 
         sa =lb1= Label(frame,text="Câu trả lời:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
-        sa.place(x=100,y=420)
+        sa.place(x=50,y=300)
 
         #entry2 
         self.txtpwd=ttk.Entry(frame,textvariable=self.var_sa,font=("times new roman",15,"bold"))
-        self.txtpwd.place(x=103,y=445,width=270)
+        self.txtpwd.place(x=50,y=330,width=270)
 
         # ========================= Section 4-----Column 2=============================
 
         #label1 
         pwd =lb1= Label(frame,text="mật khẩu:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
-        pwd.place(x=530,y=350)
+        pwd.place(x=350,y=230)
 
         #entry1 
         self.txtuser=ttk.Entry(frame,textvariable=self.var_pwd,font=("times new roman",15,"bold"))
-        self.txtuser.place(x=533,y=375,width=270)
+        self.txtuser.place(x=350,y=260,width=270)
 
 
         #label2 
         cpwd =lb1= Label(frame,text="Nhắc lại mật khẩu:",font=("times new roman",15,"bold"),fg="#002B53",bg="#F2F2F2")
-        cpwd.place(x=530,y=420)
+        cpwd.place(x=350,y=300)
 
         #entry2 
         self.txtpwd=ttk.Entry(frame,textvariable=self.var_cpwd,font=("times new roman",15,"bold"))
-        self.txtpwd.place(x=533,y=445,width=270)
+        self.txtpwd.place(x=350,y=330,width=270)
 
         # Checkbutton
         checkbtn = Checkbutton(frame,variable=self.var_check,text="Đồng ý các điều khoản",font=("times new roman",13,"bold"),fg="#002B53",bg="#F2F2F2")
-        checkbtn.place(x=100,y=480,width=270)
+        checkbtn.place(x=40,y=370,width=270)
 
 
         # Creating Button Register
         loginbtn=Button(frame,command=self.reg,text="Đăng Ký",font=("times new roman",15,"bold"),bd=0,relief=RIDGE,fg="#fff",bg="#002B53",activeforeground="white",activebackground="#007ACC")
-        loginbtn.place(x=103,y=510,width=270,height=35)
+        loginbtn.place(x=50,y=410,width=270,height=35)
 
         # Creating Button Login
         loginbtn=Button(frame,text="Đăng Nhập",font=("times new roman",15,"bold"),bd=0,relief=RIDGE,fg="#fff",bg="#002B53",activeforeground="white",activebackground="#007ACC")
-        loginbtn.place(x=533,y=510,width=270,height=35)
+        loginbtn.place(x=350,y=410,width=270,height=35)
 
 
 
@@ -142,7 +143,7 @@ class Register:
         else:
             # messagebox.showinfo("Successfully","Successfully Register!")
             try:
-                conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+                conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
                 mycursor = conn.cursor()
                 query=("select * from regteach where email=%s")
                 value=(self.var_email.get(),)

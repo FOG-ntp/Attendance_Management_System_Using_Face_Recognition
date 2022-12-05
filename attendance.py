@@ -20,8 +20,8 @@ class Attendance:
     
     def __init__(self,root):
         self.root=root
-        self.root.geometry("1250x700+0+0")
-        self.root.title("Quản Lý Điểm Danh")
+        self.root.state('zoomed')
+        self.root.title("Hệ thống quản lý điểm danh sử dụng nhận dạng khuôn mặt")
 
         #-----------Variables-------------------
         self.var_id=StringVar()
@@ -32,29 +32,29 @@ class Attendance:
         self.var_date=StringVar()
         self.var_attend=StringVar()
 
-        # This part is image labels setting start 
+# This part is image labels setting start 
         # first header image  
-        img=Image.open(r"D:\VKU\STEM\Python-FYP-Face-Recognition-Attendence-System\Images_GUI\banner.jpg")
-        img=img.resize((1250,120),Image.ANTIALIAS)
+        img=Image.open(r"D:\VKU\DoAnCoSo4\Attendance_Management_System_Using_Face_Recognition\Images_GUI\banner2.png")
+        img=img.resize((1280,130),Image.ANTIALIAS)
         self.photoimg=ImageTk.PhotoImage(img)
 
         # set image as lable
         f_lb1 = Label(self.root,image=self.photoimg)
-        f_lb1.place(x=0,y=0,width=1250,height=120)
+        f_lb1.place(x=0,y=0,width=1280,height=130)
 
         # backgorund image 
-        bg1=Image.open(r"D:\VKU\STEM\Python-FYP-Face-Recognition-Attendence-System\Images_GUI\bg3.jpg")
-        bg1=bg1.resize((1250,768),Image.ANTIALIAS)
+        bg1=Image.open(r"D:\VKU\DoAnCoSo4\Attendance_Management_System_Using_Face_Recognition\Images_GUI\bg4.jpg")
+        bg1=bg1.resize((1280,500),Image.ANTIALIAS)
         self.photobg1=ImageTk.PhotoImage(bg1)
 
         # set image as lable
         bg_img = Label(self.root,image=self.photobg1)
-        bg_img.place(x=0,y=130,width=1250,height=768)
+        bg_img.place(x=0,y=145,width=1280,height=500)
 
 
         #title section
-        title_lb1 = Label(bg_img,text="Quản Lý Điểm Danh",font=("verdana",30,"bold"),bg="white",fg="navyblue")
-        title_lb1.place(x=0,y=0,width=1250,height=40)
+        title_lb1 = Label(bg_img,text="VKU - Quản lí điểm danh",font=("verdana",20,"bold"),bg="navyblue",fg="white")
+        title_lb1.place(x=0,y=0,width=1280,height=40)
 
         #========================Section Creating==================================
 
@@ -71,21 +71,21 @@ class Attendance:
         # ==================================Text boxes and Combo Boxes====================
 
         #Student id
-        studentId_label = Label(left_frame,text="ID:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        studentId_label = Label(left_frame,text="ID Sinh Viên:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
         studentId_label.grid(row=0,column=0,padx=5,pady=5,sticky=W)
 
         studentId_entry = ttk.Entry(left_frame,textvariable=self.var_id,width=15,font=("verdana",12,"bold"))
         studentId_entry.grid(row=0,column=1,padx=5,pady=5,sticky=W)
 
         #Student Roll
-        student_roll_label = Label(left_frame,text="Roll.No:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_roll_label = Label(left_frame,text="Mã Sinh Viên:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
         student_roll_label.grid(row=0,column=2,padx=5,pady=5,sticky=W)
 
         student_roll_entry = ttk.Entry(left_frame,textvariable=self.var_roll,width=15,font=("verdana",12,"bold"))
         student_roll_entry.grid(row=0,column=3,padx=5,pady=5,sticky=W)
 
         #Studnet Name
-        student_name_label = Label(left_frame,text="Tên:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_name_label = Label(left_frame,text="Tên Sinh Viên:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
         student_name_label.grid(row=1,column=0,padx=5,pady=5,sticky=W)
 
         student_name_entry = ttk.Entry(left_frame,textvariable=self.var_name,width=15,font=("verdana",12,"bold"))
@@ -117,13 +117,13 @@ class Attendance:
         student_attend_label.grid(row=2,column=2,padx=5,pady=5,sticky=W)
 
         attend_combo=ttk.Combobox(left_frame,textvariable=self.var_attend,width=13,font=("verdana",12,"bold"),state="readonly")
-        attend_combo["values"]=("Trạng thái","Có mặt","Vắng mặt")
+        attend_combo["values"]=("Có mặt","Vắng mặt")
         attend_combo.current(0)
         attend_combo.grid(row=2,column=3,padx=5,pady=5,sticky=W)
 
         # ===============================Table Sql Data View==========================
         table_frame = Frame(left_frame,bd=2,bg="white",relief=RIDGE)
-        table_frame.place(x=10,y=100,width=635,height=310)
+        table_frame.place(x=10,y=100,width=635,height=280)
 
         #scroll bar 
         scroll_x = ttk.Scrollbar(table_frame,orient=HORIZONTAL)
@@ -138,7 +138,7 @@ class Attendance:
         scroll_y.config(command=self.attendanceReport_left.yview)
 
         self.attendanceReport_left.heading("ID",text="ID")
-        self.attendanceReport_left.heading("Roll_No",text="Roll.No")
+        self.attendanceReport_left.heading("Roll_No",text="Mã Sinh Viên")
         self.attendanceReport_left.heading("Name",text="Tên")
         self.attendanceReport_left.heading("Time",text="Giờ")
         self.attendanceReport_left.heading("Date",text="Ngày")
@@ -161,8 +161,8 @@ class Attendance:
         # =========================button section========================
 
         #Button Frame
-        btn_frame = Frame(left_frame,bd=2,bg="white",relief=RIDGE)
-        btn_frame.place(x=10,y=390,width=635,height=60)
+        btn_frame = Frame(left_frame,bg="white",relief=RIDGE)
+        btn_frame.place(x=10,y=375,width=635,height=40)
 
         #Improt button
         save_btn=Button(btn_frame,command=self.importCsv,text="Nhập CSV",width=12,font=("verdana",12,"bold"),fg="white",bg="navyblue")
@@ -208,7 +208,7 @@ class Attendance:
         scroll_y.config(command=self.attendanceReport.yview)
 
         self.attendanceReport.heading("ID",text="ID")
-        self.attendanceReport.heading("Roll_No",text="Roll.No")
+        self.attendanceReport.heading("Roll_No",text="Mã Sinh Viên")
         self.attendanceReport.heading("Name",text="Tên")
         self.attendanceReport.heading("Time",text="Giờ")
         self.attendanceReport.heading("Date",text="Ngày")
@@ -242,7 +242,7 @@ class Attendance:
             try:
                 Update=messagebox.askyesno("Update","Bạn có muốn cập nhật điểm chuyên cần của sinh viên này không!",parent=self.root)
                 if Update > 0:
-                    conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+                    conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
                     mycursor = conn.cursor()
                     mycursor.execute("update stdattendance set std_id=%s,std_roll_no=%s,std_name=%s,std_time=%s,std_date=%s,std_attendance=%s where std_id=%s",( 
                     self.var_id.get(),
@@ -270,7 +270,7 @@ class Attendance:
             try:
                 delete=messagebox.askyesno("Delete","Bạn có muốn xóa không?",parent=self.root)
                 if delete>0:
-                    conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+                    conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
                     mycursor = conn.cursor() 
                     sql="delete from stdattendance where std_id=%s"
                     val=(self.var_id.get(),)
@@ -288,7 +288,7 @@ class Attendance:
     # ===========================fatch data form mysql attendance===========
 
     def fetch_data(self):
-        conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+        conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
         mycursor = conn.cursor()
 
         mycursor.execute("select * from stdattendance")
@@ -381,7 +381,7 @@ class Attendance:
             messagebox.showerror("Error","Vui lòng điền vào tất cả các trường là bắt buộc!",parent=self.root)
         else:
             try:
-                conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+                conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
                 mycursor = conn.cursor()
                 mycursor.execute("insert into stdattendance values(%s,%s,%s,%s,%s,%s)",(
                 self.var_id.get(),
@@ -404,7 +404,7 @@ class Attendance:
 
 
 
-    #     conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+    #     conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
     #     mycursor = conn.cursor()
     #     if messagebox.askyesno("Confirmation","Are you sure you want to save attendance on database?"):
     #         for i in mydata:

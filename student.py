@@ -4,9 +4,10 @@ from PIL import Image,ImageTk
 from tkinter import messagebox
 import mysql.connector
 import cv2
+import numpy as np 
 # Testing Connection 
 """
-conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
 cursor = conn.cursor()
 
 cursor.execute("show databases")
@@ -20,7 +21,7 @@ conn.close()
 class Student:
     def __init__(self,root):
         self.root=root
-        self.root.geometry("1250x700+0+0")
+        self.root.state('zoomed')
         self.root.title("Hệ thống quản lý điểm danh sử dụng nhận dạng khuôn mặt")
 
         #-----------Variables-------------------
@@ -41,199 +42,199 @@ class Student:
 
     # This part is image labels setting start 
         # first header image  
-        img=Image.open(r"D:\VKU\STEM\Python-FYP-Face-Recognition-Attendence-System\Images_GUI\banner.jpg")
-        img=img.resize((1250,120),Image.ANTIALIAS)
+        img=Image.open(r"D:\VKU\DoAnCoSo4\Attendance_Management_System_Using_Face_Recognition\Images_GUI\banner2.png")
+        img=img.resize((1280,130),Image.ANTIALIAS)
         self.photoimg=ImageTk.PhotoImage(img)
 
         # set image as lable
         f_lb1 = Label(self.root,image=self.photoimg)
-        f_lb1.place(x=0,y=0,width=1250,height=120)
+        f_lb1.place(x=0,y=0,width=1280,height=130)
 
         # backgorund image 
-        bg1=Image.open(r"D:\VKU\STEM\Python-FYP-Face-Recognition-Attendence-System\Images_GUI\bg3.jpg")
-        bg1=bg1.resize((1250,768),Image.ANTIALIAS)
+        bg1=Image.open(r"D:\VKU\DoAnCoSo4\Attendance_Management_System_Using_Face_Recognition\Images_GUI\bg4.jpg")
+        bg1=bg1.resize((1280,500),Image.ANTIALIAS)
         self.photobg1=ImageTk.PhotoImage(bg1)
 
         # set image as lable
         bg_img = Label(self.root,image=self.photobg1)
-        bg_img.place(x=0,y=130,width=1250,height=768)
+        bg_img.place(x=0,y=145,width=1280,height=500)
 
 
         #title section
-        title_lb1 = Label(bg_img,text="Trang Quản Lý Thông Tin Sinh Viên",font=("verdana",25,"bold"),bg="white",fg="navyblue")
-        title_lb1.place(x=0,y=0,width=1250,height=40)
+        title_lb1 = Label(bg_img,text="VKU - Quản lí thông tin sinh viên",font=("verdana",20,"bold"),bg="navyblue",fg="white")
+        title_lb1.place(x=0,y=0,width=1280,height=40)
 
         # Creating Frame 
         main_frame = Frame(bg_img,bd=2,bg="white") #bd mean border 
-        main_frame.place(x=0,y=40,width=1250,height=510)
+        main_frame.place(x=0,y=40,width=1280,height=500)
 
         # Left Label Frame 
-        left_frame = LabelFrame(main_frame,bd=2,bg="white",relief=RIDGE,text="Thông tin",font=("verdana",12,"bold"),fg="navyblue")
-        left_frame.place(x=10,y=10,width=660,height=480)
+        left_frame = LabelFrame(main_frame,bd=2,bg="white",relief=RIDGE,text="Thông tin sinh viên",font=("verdana",10,"bold"),fg="navyblue")
+        left_frame.place(x=7,y=7,width=590,height=450)
 
         # Current Course 
-        current_course_frame = LabelFrame(left_frame,bd=2,bg="white",relief=RIDGE,text="Khóa học hiện tại",font=("verdana",10,"bold"),fg="navyblue")
-        current_course_frame.place(x=10,y=5,width=635,height=150)
+        current_course_frame = LabelFrame(left_frame,bd=2,bg="white",relief=RIDGE,text="Thông tin khóa học",font=("verdana",10,"bold"),fg="navyblue")
+        current_course_frame.place(x=10,y=5,width=560,height=120)
 
         #label Department
-        dep_label=Label(current_course_frame,text="Ngành",font=("verdana",12,"bold"),bg="white",fg="navyblue")
-        dep_label.grid(row=0,column=0,padx=5,pady=15)
+        dep_label=Label(current_course_frame,text="Chuyên ngành",font=("verdana",10,"bold"),bg="white",fg="navyblue")
+        dep_label.grid(row=0,column=0,padx=5,pady=12)
 
         #combo box 
-        dep_combo=ttk.Combobox(current_course_frame,textvariable=self.var_dep,width=15,font=("verdana",12,"bold"),state="readonly")
-        dep_combo["values"]=("Chọn","Kỹ thuật phần mềm","An toàn thông tin","Quản trị kinh doanh","Thiết kế MT số")
+        dep_combo=ttk.Combobox(current_course_frame,textvariable=self.var_dep,width=15,font=("verdana",10,"bold"),state="readonly")
+        dep_combo["values"]=("Công nghệ kỹ thuật máy tính","Công nghệ thông tin","Khoa học dữ liệu và AI","Thiết kế mĩ thuật số","Quản trị kinh doanh","Logistics và chuỗi cung ứng")
         dep_combo.current(0)
-        dep_combo.grid(row=0,column=1,padx=5,pady=15,sticky=W)
+        dep_combo.grid(row=0,column=1,padx=5,pady=12,sticky=W)
 
         # -----------------------------------------------------
 
         #label Course
-        cou_label=Label(current_course_frame,text="Môn",font=("verdana",12,"bold"),bg="white",fg="navyblue")
-        cou_label.grid(row=0,column=2,padx=5,pady=15)
+        cou_label=Label(current_course_frame,text="Hệ đào tạo",font=("verdana",10,"bold"),bg="white",fg="navyblue")
+        cou_label.grid(row=0,column=2,padx=5,pady=12)
 
         #combo box 
-        cou_combo=ttk.Combobox(current_course_frame,textvariable=self.var_course,width=15,font=("verdana",12,"bold"),state="readonly")
-        cou_combo["values"]=("Chọn","STEM","Đồ họa MT","Lập trình mạng","Linux","AI")
+        cou_combo=ttk.Combobox(current_course_frame,textvariable=self.var_course,width=15,font=("verdana",10,"bold"),state="readonly")
+        cou_combo["values"]=("Chính quy","Liên Thông")
         cou_combo.current(0)
-        cou_combo.grid(row=0,column=3,padx=5,pady=15,sticky=W)
+        cou_combo.grid(row=0,column=3,padx=5,pady=12,sticky=W)
 
         #-------------------------------------------------------------
 
         #label Year
-        year_label=Label(current_course_frame,text="Năm",font=("verdana",12,"bold"),bg="white",fg="navyblue")
+        year_label=Label(current_course_frame,text="Năm học",font=("verdana",10,"bold"),bg="white",fg="navyblue")
         year_label.grid(row=1,column=0,padx=5,sticky=W)
 
         #combo box 
-        year_combo=ttk.Combobox(current_course_frame,textvariable=self.var_year,width=15,font=("verdana",12,"bold"),state="readonly")
-        year_combo["values"]=("Chọn","2020","2021","2022","2023","2024")
+        year_combo=ttk.Combobox(current_course_frame,textvariable=self.var_year,width=15,font=("verdana",10,"bold"),state="readonly")
+        year_combo["values"]=("2020","2021","2022","2023","2024")
         year_combo.current(0)
-        year_combo.grid(row=1,column=1,padx=5,pady=15,sticky=W)
+        year_combo.grid(row=1,column=1,padx=5,pady=12,sticky=W)
 
         #-----------------------------------------------------------------
 
         #label Semester 
-        year_label=Label(current_course_frame,text="Học kì",font=("verdana",12,"bold"),bg="white",fg="navyblue")
+        year_label=Label(current_course_frame,text="Học kì",font=("verdana",10,"bold"),bg="white",fg="navyblue")
         year_label.grid(row=1,column=2,padx=5,sticky=W)
 
         #combo box 
-        year_combo=ttk.Combobox(current_course_frame,textvariable=self.var_semester,width=15,font=("verdana",12,"bold"),state="readonly")
-        year_combo["values"]=("Chọn","Học kì-1","Học kì-2")
+        year_combo=ttk.Combobox(current_course_frame,textvariable=self.var_semester,width=15,font=("verdana",10,"bold"),state="readonly")
+        year_combo["values"]=("Học kì-1","Học kì-2")
         year_combo.current(0)
         year_combo.grid(row=1,column=3,padx=5,pady=15,sticky=W)
 
         #Class Student Information
-        class_Student_frame = LabelFrame(left_frame,bd=2,bg="white",relief=RIDGE,text="Sơ lược",font=("verdana",12,"bold"),fg="navyblue")
-        class_Student_frame.place(x=10,y=160,width=635,height=230)
+        class_Student_frame = LabelFrame(left_frame,bd=2,bg="white",relief=RIDGE,text="Thông tin lớp học",font=("verdana",10,"bold"),fg="navyblue")
+        class_Student_frame.place(x=10,y=130,width=560,height=230)
 
         #Student id
-        studentId_label = Label(class_Student_frame,text="ID:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        studentId_label = Label(class_Student_frame,text="ID Sinh Viên:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         studentId_label.grid(row=0,column=0,padx=5,pady=5,sticky=W)
 
-        studentId_entry = ttk.Entry(class_Student_frame,textvariable=self.var_std_id,width=15,font=("verdana",12,"bold"))
+        studentId_entry = ttk.Entry(class_Student_frame,textvariable=self.var_std_id,width=15,font=("verdana",10,"bold"))
         studentId_entry.grid(row=0,column=1,padx=5,pady=5,sticky=W)
 
         #Student name
-        student_name_label = Label(class_Student_frame,text="Tên:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_name_label = Label(class_Student_frame,text="Tên Sinh Viên:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         student_name_label.grid(row=0,column=2,padx=5,pady=5,sticky=W)
 
-        student_name_entry = ttk.Entry(class_Student_frame,textvariable=self.var_std_name,width=15,font=("verdana",12,"bold"))
+        student_name_entry = ttk.Entry(class_Student_frame,textvariable=self.var_std_name,width=15,font=("verdana",10,"bold"))
         student_name_entry.grid(row=0,column=3,padx=5,pady=5,sticky=W)
 
         #Class Didvision
-        student_div_label = Label(class_Student_frame,text="Buổi học:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_div_label = Label(class_Student_frame,text="Buổi học:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         student_div_label.grid(row=1,column=0,padx=5,pady=5,sticky=W)
 
-        div_combo=ttk.Combobox(class_Student_frame,textvariable=self.var_div,width=13,font=("verdana",12,"bold"),state="readonly")
+        div_combo=ttk.Combobox(class_Student_frame,textvariable=self.var_div,width=13,font=("verdana",10,"bold"),state="readonly")
         div_combo["values"]=("Sáng","Chiều")
         div_combo.current(0)
         div_combo.grid(row=1,column=1,padx=5,pady=5,sticky=W)
 
         #Roll No
-        student_roll_label = Label(class_Student_frame,text="Roll-No:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_roll_label = Label(class_Student_frame,text="Mã Sinh Viên:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         student_roll_label.grid(row=1,column=2,padx=5,pady=5,sticky=W)
 
-        student_roll_entry = ttk.Entry(class_Student_frame,textvariable=self.var_roll,width=15,font=("verdana",12,"bold"))
+        student_roll_entry = ttk.Entry(class_Student_frame,textvariable=self.var_roll,width=15,font=("verdana",10,"bold"))
         student_roll_entry.grid(row=1,column=3,padx=5,pady=5,sticky=W)
 
         #Gender
-        student_gender_label = Label(class_Student_frame,text="Giới tính:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_gender_label = Label(class_Student_frame,text="Giới tính:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         student_gender_label.grid(row=2,column=0,padx=5,pady=5,sticky=W)
 
         #combo box 
-        gender_combo=ttk.Combobox(class_Student_frame,textvariable=self.var_gender,width=13,font=("verdana",12,"bold"),state="readonly")
+        gender_combo=ttk.Combobox(class_Student_frame,textvariable=self.var_gender,width=13,font=("verdana",10,"bold"),state="readonly")
         gender_combo["values"]=("Nam","Nữ","Khác")
         gender_combo.current(0)
         gender_combo.grid(row=2,column=1,padx=5,pady=5,sticky=W)
 
         #Date of Birth
-        student_dob_label = Label(class_Student_frame,text="DOB:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_dob_label = Label(class_Student_frame,text="Ngày Sinh:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         student_dob_label.grid(row=2,column=2,padx=5,pady=5,sticky=W)
 
-        student_dob_entry = ttk.Entry(class_Student_frame,textvariable=self.var_dob,width=15,font=("verdana",12,"bold"))
+        student_dob_entry = ttk.Entry(class_Student_frame,textvariable=self.var_dob,width=15,font=("verdana",10,"bold"))
         student_dob_entry.grid(row=2,column=3,padx=5,pady=5,sticky=W)
 
         #Email
-        student_email_label = Label(class_Student_frame,text="Email:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_email_label = Label(class_Student_frame,text="Email:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         student_email_label.grid(row=3,column=0,padx=5,pady=5,sticky=W)
 
-        student_email_entry = ttk.Entry(class_Student_frame,textvariable=self.var_email,width=15,font=("verdana",12,"bold"))
+        student_email_entry = ttk.Entry(class_Student_frame,textvariable=self.var_email,width=15,font=("verdana",10,"bold"))
         student_email_entry.grid(row=3,column=1,padx=5,pady=5,sticky=W)
 
         #Phone Number
-        student_mob_label = Label(class_Student_frame,text="Mobile:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_mob_label = Label(class_Student_frame,text="Di động:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         student_mob_label.grid(row=3,column=2,padx=5,pady=5,sticky=W)
 
-        student_mob_entry = ttk.Entry(class_Student_frame,textvariable=self.var_mob,width=15,font=("verdana",12,"bold"))
+        student_mob_entry = ttk.Entry(class_Student_frame,textvariable=self.var_mob,width=15,font=("verdana",10,"bold"))
         student_mob_entry.grid(row=3,column=3,padx=5,pady=5,sticky=W)
 
         #Address
-        student_address_label = Label(class_Student_frame,text="Địa chỉ:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_address_label = Label(class_Student_frame,text="Địa chỉ:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         student_address_label.grid(row=4,column=0,padx=5,pady=5,sticky=W)
 
-        student_address_entry = ttk.Entry(class_Student_frame,textvariable=self.var_address,width=15,font=("verdana",12,"bold"))
+        student_address_entry = ttk.Entry(class_Student_frame,textvariable=self.var_address,width=15,font=("verdana",10,"bold"))
         student_address_entry.grid(row=4,column=1,padx=5,pady=5,sticky=W)
 
         #Teacher Name
-        student_tutor_label = Label(class_Student_frame,text="Giảng viên:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        student_tutor_label = Label(class_Student_frame,text="Giảng viên:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         student_tutor_label.grid(row=4,column=2,padx=5,pady=5,sticky=W)
 
-        student_tutor_entry = ttk.Entry(class_Student_frame,textvariable=self.var_teacher,width=15,font=("verdana",12,"bold"))
+        student_tutor_entry = ttk.Entry(class_Student_frame,textvariable=self.var_teacher,width=15,font=("verdana",10,"bold"))
         student_tutor_entry.grid(row=4,column=3,padx=5,pady=5,sticky=W)
 
         #Radio Buttons
         self.var_radio1=StringVar()
-        radiobtn1=ttk.Radiobutton(class_Student_frame,text="Chụp ảnh",variable=self.var_radio1,value="Yes")
+        radiobtn1=ttk.Radiobutton(class_Student_frame,text="Có ảnh",variable=self.var_radio1,value="Có Ảnh")
         radiobtn1.grid(row=5,column=0,padx=5,pady=5,sticky=W)
 
-        radiobtn1=ttk.Radiobutton(class_Student_frame,text="Không có ảnh",variable=self.var_radio1,value="No")
+        radiobtn1=ttk.Radiobutton(class_Student_frame,text="Không ảnh",variable=self.var_radio1,value="Không Ảnh")
         radiobtn1.grid(row=5,column=1,padx=5,pady=5,sticky=W)
 
         #Button Frame
-        btn_frame = Frame(left_frame,bd=2,bg="white",relief=RIDGE)
-        btn_frame.place(x=10,y=390,width=635,height=60)
+        btn_frame = Frame(left_frame,bg="white",relief=RIDGE)
+        btn_frame.place(x=10,y=370,width=570,height=45)
 
         #save button
-        save_btn=Button(btn_frame,command=self.add_data,text="Lưu",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        save_btn=Button(btn_frame,command=self.add_data,text="Lưu",width=7,font=("verdana",10,"bold"),fg="white",bg="navyblue")
         save_btn.grid(row=0,column=0,padx=5,pady=10,sticky=W)
 
         #update button
-        update_btn=Button(btn_frame,command=self.update_data,text="Sửa",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        update_btn=Button(btn_frame,command=self.update_data,text="Sửa",width=7,font=("verdana",10,"bold"),fg="white",bg="navyblue")
         update_btn.grid(row=0,column=1,padx=5,pady=8,sticky=W)
 
         #delete button
-        del_btn=Button(btn_frame,command=self.delete_data,text="Xóa",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        del_btn=Button(btn_frame,command=self.delete_data,text="Xóa",width=7,font=("verdana",10,"bold"),fg="white",bg="navyblue")
         del_btn.grid(row=0,column=2,padx=5,pady=10,sticky=W)
 
         #reset button
-        reset_btn=Button(btn_frame,command=self.reset_data,text="Reset",width=7,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        reset_btn=Button(btn_frame,command=self.reset_data,text="Reset",width=7,font=("verdana",10,"bold"),fg="white",bg="navyblue")
         reset_btn.grid(row=0,column=3,padx=5,pady=10,sticky=W)
 
         #take photo button
-        take_photo_btn=Button(btn_frame,command=self.generate_dataset,text="Chụp Ảnh",width=9,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        take_photo_btn=Button(btn_frame,command=self.generate_dataset,text="Lấy Ảnh",width=9,font=("verdana",10,"bold"),fg="white",bg="navyblue")
         take_photo_btn.grid(row=0,column=4,padx=5,pady=10,sticky=W)
 
         #update photo button
-        update_photo_btn=Button(btn_frame,text="Sửa Ảnh",width=9,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        update_photo_btn=Button(btn_frame,text="Sửa Ảnh",width=9,font=("verdana",10,"bold"),fg="white",bg="navyblue")
         update_photo_btn.grid(row=0,column=5,padx=5,pady=10,sticky=W)
 
 
@@ -242,38 +243,38 @@ class Student:
 
         #----------------------------------------------------------------------
         # Right Label Frame 
-        right_frame = LabelFrame(main_frame,bd=2,bg="white",relief=RIDGE,text="Danh sách",font=("verdana",12,"bold"),fg="navyblue")
-        right_frame.place(x=680,y=10,width=660,height=480)
+        right_frame = LabelFrame(main_frame,bd=2,bg="white",relief=RIDGE,text="Danh sách",font=("verdana",10,"bold"),fg="navyblue")
+        right_frame.place(x=620,y=8,width=660,height=450)
 
         #Searching System in Right Label Frame 
-        search_frame = LabelFrame(right_frame,bd=2,bg="white",relief=RIDGE,text="Tìm kiếm",font=("verdana",12,"bold"),fg="navyblue")
+        search_frame = LabelFrame(right_frame,bd=2,bg="white",relief=RIDGE,text="Hệ thống tìm kiếm",font=("verdana",10,"bold"),fg="navyblue")
         search_frame.place(x=10,y=5,width=635,height=80)
 
         #Phone Number
-        search_label = Label(search_frame,text="Tìm:",font=("verdana",12,"bold"),fg="navyblue",bg="white")
+        search_label = Label(search_frame,text="Tìm kiếm theo:",font=("verdana",10,"bold"),fg="navyblue",bg="white")
         search_label.grid(row=0,column=0,padx=5,pady=5,sticky=W)
         self.var_searchTX=StringVar()
         #combo box 
-        search_combo=ttk.Combobox(search_frame,textvariable=self.var_searchTX,width=12,font=("verdana",12,"bold"),state="readonly")
-        search_combo["values"]=("Chọn","Roll-No")
+        search_combo=ttk.Combobox(search_frame,textvariable=self.var_searchTX,width=12,font=("verdana",10,"bold"),state="readonly")
+        search_combo["values"]=("Mã-Sinh-Viên","Email")
         search_combo.current(0)
         search_combo.grid(row=0,column=1,padx=5,pady=15,sticky=W)
 
         self.var_search=StringVar()
-        search_entry = ttk.Entry(search_frame,textvariable=self.var_search,width=12,font=("verdana",12,"bold"))
+        search_entry = ttk.Entry(search_frame,textvariable=self.var_search,width=12,font=("verdana",10,"bold"))
         search_entry.grid(row=0,column=2,padx=5,pady=5,sticky=W)
 
-        search_btn=Button(search_frame,command=self.search_data,text="Tìm kiếm",width=9,font=("verdana",12,"bold"),fg="white",bg="navyblue")
+        search_btn=Button(search_frame,command=self.search_data,text="Tìm kiếm",width=10,font=("verdana",10,"bold"),fg="white",bg="navyblue")
         search_btn.grid(row=0,column=3,padx=5,pady=10,sticky=W)
 
-        """ showAll_btn=Button(search_frame,command=self.fetch_data,text="Tất cả",width=8,font=("verdana",12,"bold"),fg="white",bg="navyblue")
-        showAll_btn.grid(row=0,column=4,padx=5,pady=10,sticky=W) """
+        showAll_btn=Button(search_frame,command=self.fetch_data,text="Xem tất cả",width=10,font=("verdana",10,"bold"),fg="white",bg="navyblue")
+        showAll_btn.grid(row=0,column=4,padx=5,pady=10,sticky=W)
 
         # -----------------------------Table Frame-------------------------------------------------
         #Table Frame 
         #Searching System in Right Label Frame 
         table_frame = Frame(right_frame,bd=2,bg="white",relief=RIDGE)
-        table_frame.place(x=10,y=90,width=635,height=360)
+        table_frame.place(x=10,y=90,width=630,height=330)
 
         #scroll bar 
         scroll_x = ttk.Scrollbar(table_frame,orient=HORIZONTAL)
@@ -287,18 +288,18 @@ class Student:
         scroll_x.config(command=self.student_table.xview)
         scroll_y.config(command=self.student_table.yview)
 
-        self.student_table.heading("ID",text="ID")
-        self.student_table.heading("Name",text="Tên")
-        self.student_table.heading("Dep",text="Ngành")
-        self.student_table.heading("Course",text="Lớp")
-        self.student_table.heading("Year",text="Năm")
+        self.student_table.heading("ID",text="ID Sinh viên")
+        self.student_table.heading("Name",text="Tên sinh viên")
+        self.student_table.heading("Dep",text="Chuyên ngành")
+        self.student_table.heading("Course",text="Hệ đào tạo")
+        self.student_table.heading("Year",text="Năm học")
         self.student_table.heading("Sem",text="Học kì")
-        self.student_table.heading("Div",text="Buổi")
+        self.student_table.heading("Div",text="Buổi học")
         self.student_table.heading("Gender",text="Giới tính")
-        self.student_table.heading("DOB",text="DOB")
-        self.student_table.heading("Mob-No",text="Mob-No")
+        self.student_table.heading("DOB",text="Ngày sinh")
+        self.student_table.heading("Mob-No",text="Di động")
         self.student_table.heading("Address",text="Địa chỉ")
-        self.student_table.heading("Roll-No",text="Roll-No")
+        self.student_table.heading("Roll-No",text="Mã Sinh viên")
         self.student_table.heading("Email",text="Email")
         self.student_table.heading("Teacher",text="Giảng viên")
         self.student_table.heading("Photo",text="Ảnh")
@@ -307,20 +308,20 @@ class Student:
 
         # Set Width of Colums 
         self.student_table.column("ID",width=20)
-        self.student_table.column("Name",width=100)
-        self.student_table.column("Dep",width=100)
-        self.student_table.column("Course",width=100)
-        self.student_table.column("Year",width=100)
-        self.student_table.column("Sem",width=100)
-        self.student_table.column("Div",width=100)
-        self.student_table.column("Gender",width=100)
-        self.student_table.column("DOB",width=100)
-        self.student_table.column("Mob-No",width=100)
-        self.student_table.column("Address",width=100)
-        self.student_table.column("Roll-No",width=100)
-        self.student_table.column("Email",width=100)
-        self.student_table.column("Teacher",width=100)
-        self.student_table.column("Photo",width=100)
+        self.student_table.column("Name",width=120)
+        self.student_table.column("Dep",width=120)
+        self.student_table.column("Course",width=120)
+        self.student_table.column("Year",width=120)
+        self.student_table.column("Sem",width=120)
+        self.student_table.column("Div",width=120)
+        self.student_table.column("Gender",width=120)
+        self.student_table.column("DOB",width=120)
+        self.student_table.column("Mob-No",width=120)
+        self.student_table.column("Address",width=120)
+        self.student_table.column("Roll-No",width=120)
+        self.student_table.column("Email",width=120)
+        self.student_table.column("Teacher",width=120)
+        self.student_table.column("Photo",width=120)
 
 
         self.student_table.pack(fill=BOTH,expand=1)
@@ -332,7 +333,7 @@ class Student:
             messagebox.showerror("Error","Vui lòng điền vào tất cả các trường là bắt buộc!",parent=self.root)
         else:
             try:
-                conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+                conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
                 mycursor = conn.cursor()
                 mycursor.execute("insert into student values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
                 self.var_std_id.get(),
@@ -362,7 +363,7 @@ class Student:
     # ===========================Fetch data form database to table ================================
 
     def fetch_data(self):
-        conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+        conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
         mycursor = conn.cursor()
 
         mycursor.execute("select * from student")
@@ -405,7 +406,7 @@ class Student:
             try:
                 Update=messagebox.askyesno("Update","Bạn có muốn sửa lại không!",parent=self.root)
                 if Update > 0:
-                    conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+                    conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
                     mycursor = conn.cursor()
                     mycursor.execute("update student set Name=%s,Department=%s,Course=%s,Year=%s,Semester=%s,Division=%s,Gender=%s,DOB=%s,Mobile_No=%s,Address=%s,Roll_No=%s,Email=%s,Teacher_Name=%s,PhotoSample=%s where Student_ID=%s",( 
                     self.var_std_name.get(),
@@ -442,7 +443,7 @@ class Student:
             try:
                 delete=messagebox.askyesno("Delete","Bạn có muốn xóa không?",parent=self.root)
                 if delete>0:
-                    conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+                    conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
                     mycursor = conn.cursor() 
                     sql="delete from student where Student_ID=%s"
                     val=(self.var_std_id.get(),)
@@ -482,7 +483,7 @@ class Student:
             messagebox.showerror("Error","Select Combo option and enter entry box",parent=self.root)
         else:
             try:
-                conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+                conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
                 my_cursor = conn.cursor()
                 sql = "SELECT Student_ID,Name,Department,Course,Year,Semester,Division,Gender,DOB,Mobile_No,Address,Roll_No,Email,Teacher_Name,PhotoSample FROM student where Roll_No='" +str(self.var_search.get()) + "'" 
                 my_cursor.execute(sql)
@@ -508,7 +509,7 @@ class Student:
         else:
             try:
                 
-                conn = mysql.connector.connect(username='root', password='2912002',host='localhost',database='face_recognition',port=3306)
+                conn = mysql.connector.connect(user='root', password='2912002',host='localhost',database='face_recognition',port=3306)
                 mycursor = conn.cursor()
                 mycursor.execute("select * from student")
                 myreslut = mycursor.fetchall()
@@ -557,6 +558,7 @@ class Student:
                     ret,my_frame=cap.read()
                     if face_croped(my_frame) is not None:
                         img_id+=1
+                        
                         face=cv2.resize(face_croped(my_frame),(200,200))
                         face=cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)
                         file_path="data_img/stdudent."+str(id)+"."+str(img_id)+".jpg"
